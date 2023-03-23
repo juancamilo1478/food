@@ -33,7 +33,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Recipes,Diets } = sequelize.models;
 
 Recipes.belongsToMany(Diets,{through:"recipes_diets"},{ timestamps: false});
-Diets.belongsToMany(Recipes,{through:"recipes_diets"},{ timestamps: false});
+Diets.belongsToMany(Recipes,{through:"recipes_diets"},{ timestamps: false});  
 
 
 

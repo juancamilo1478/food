@@ -1,10 +1,22 @@
-import './App.css';
+ 
+import { Route,Routes } from "react-router-dom";
+import Indice from './components/indice/Indice'
+
+import './App.css'
+import Home from "./components/home/Home";
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Henry Food</h1>
-    </div>
+ 
+  return (<div>
+    <Routes>
+    <Route path="/" element={<Indice/>} />
+    <Route path="/home" element={<Home/>} />
+    </Routes>
+   
+  </div>
+     
   );
 }
 
