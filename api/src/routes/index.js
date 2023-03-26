@@ -35,10 +35,18 @@ router.get('/cards',async(req,res)=>{
 
 
 
-
+// array diets forever
 router.get('/diets',async(req,res)=>{
     try {
-    const table=await Diets.findAll()
+    let table=await Diets.findAll(  )
+    if(table.length>0)
+    {
+        table=table.map(data=>{
+            return data.name
+        })
+    }
+   
+
     if(table.length===0)
     {
     const namediets=await axios(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`)
@@ -68,20 +76,22 @@ router.get('/diets',async(req,res)=>{
         res.status(400).json({error:error.message})
     }
 })
-router.get('/diets/:name',async(req,res)=>{
+
+//search diets for id
+router.get('/diets/:id',async(req,res)=>{
     try {
-        const {name}=req.params
-        const data=await Diets.findOne({
-            where:{
-                name:name
-            }
-        })
-        Diets.findByPk(data.id).then(diet=>{
-            diet.getRecipes().then(recipes=>{
-                res.json(recipes)
+        const {id}=req.params
+        // const data=await Diets.findOne({
+        //     where:{
+        //         name:name
+        //     }
+        // })
+       const data=await Recipes.findByPk(id).then(recip=>{
+            return recip.getDiets().then(recipes=>{
+                return recipes
             })
         })
-
+        res.json(data)
    
 
     } catch (error) {
@@ -110,7 +120,7 @@ router.get('/recipes/:id',async(req,res)=>{
         const datos={
             id:recipe.data.id,
             name:recipe.data.title,
-            imagen:recipe.data.image,
+            image:recipe.data.image,
             resumen:recipe.data.instructions,
             level:recipe.data.healthScore,
             pasos:recipe.data.analyzedInstructions[0].steps,
@@ -124,31 +134,57 @@ router.get('/recipes/:id',async(req,res)=>{
     }
 })
 
-//recipes quiere name
+//recipes name server and api
 router.get('/recipes',async(req,res)=>{
-
+    // addRecipeInformation=true
     try {
     let total=[]
     const {name}=req.query
-    const datas=await axios(`https://api.spoonacular.com/recipes/complexSearch?query=${name}&apiKey=${API_KEY}`) 
-    const databs=await Recipes.findAll({
+    const datas=await axios(`https://api.spoonacular.com/recipes/complexSearch?query=${name}&addRecipeInformation=true&apiKey=${API_KEY}`) 
+    let databs=await Recipes.findAll({
   where: {
     name: {
-      [Op.like]: `%${name}%`
+      [Op.like]: `%${name}%` // buscar nombres que contengan la cadena de búsqueda
     }
-}})
-const filter=databs.map(data=>{
+  }})
+
+//// data db
+let newdata=[];
+if(databs.length>0)
+{
+  for(var i=0;i< databs.length;i++)
+  {
+     let data=await Recipes.findByPk(databs[i].id).then(recip=>{
+             return recip.getDiets().then(recipes=>{
+                 return recipes
+             })
+     })
+     let dietas=data.map(data=>{
+         return data.name
+     })
+     const element={
+        ...databs[i].toJSON(),
+        diets:dietas
+     }
+     newdata.push(element)
+  }
+}
+
+  
+let filtrado=datas.data.results.map(data=>{
     return {
         id:data.id,
-        title:data.name,
-        image:data.imagen,
-        imageType:"jpg"
-        
+        name:data.title,
+        image:data.image,
+        resumen:data.summary,
+        level:data.healthScore,
+        diets:data.diets
     }
-})
-    total=[...datas.data.results,...filter]
+  })
+//   ...filtrado
+ 
 
-    // res.status(200).json(datas.data.results)
+         total=[...newdata,...filtrado]
         res.status(200).json(total)
     } catch (error) {
         res.status(400).json({error:error.message})
@@ -160,26 +196,29 @@ const filter=databs.map(data=>{
 router.post('/recipes',async(req,res)=>{
     try {
  
-    const {name,imagen,resumen,level,pasos,diet}=req.body       
-    const dieta =await Diets.findOne({
-            where:{
-                name:diet
-            }
-        })
-
-
+    const {name,image,resumen,level,pasos,diet}=req.body  
+    // add all diets
     const data= await Recipes.create({
             name,
-            imagen,
+            image,
             resumen,
             level,
             pasos,
-    })
+    })    
 
-        
-        data.addDiets([dieta])
 
-        res.status(200).json(data)
+    for(var i=0; i<diet.length;i++)
+    {
+        const dieta =await Diets.findOne({
+            where:{
+                name:diet[i]
+            }
+        })
+   
+
+    data.addDiets([dieta])
+    }     
+    res.status(200).json(data)
         
     } catch (error) {
         res.status(400).json({error:error.message})

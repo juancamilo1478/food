@@ -20,16 +20,24 @@ function Searchfood() {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        className="search_search"
-        value={input.name}
-        name="name"
-        onChange={handleinput}
-        placeholder="search food for name"
-      />
-      <button onClick={searchdata}>search</button>
+    <div className="search_all">
+      <div className="search_add">
+        <h1>Add recipe</h1>
+        <i class="fa-sharp fa-regular fa-pen-to-square"></i>
+      </div>
+      <div className="search_search">
+        <i class="fa-solid fa-magnifying-glass" />
+        <input
+          type="text"
+          value={input.name}
+          name="name"
+          onChange={handleinput}
+          placeholder="search food for name"
+        />
+        <div onClick={searchdata} className="search_button">
+          Go
+        </div>
+      </div>
     </div>
   );
 }
