@@ -26,8 +26,38 @@ router.get('/cards',async(req,res)=>{
         diets:data.diets
        }
       })
-       
-        res.status(200).json(total)
+      let db=await  Recipes.findAll() 
+
+/// get diets and diets
+//// data db
+let newdata=[];
+if(db.length>0)
+{
+  for(var i=0;i< db.length;i++)
+  {
+     let data=await Recipes.findByPk(db[i].id).then(recip=>{
+             return recip.getDiets().then(recipes=>{
+                 return recipes
+             })
+     })
+     let dietas=data.map(data=>{
+         return data.name
+     })
+     const element={
+        ...db[i].toJSON(),
+        diets:dietas
+     }
+     newdata.push(element)
+  }
+}
+
+
+
+
+
+
+    //    [...total,...db]
+        res.status(200).json([...total,...newdata])
     } catch (error) {
         res.status(400).json({error:error.message})
     }
@@ -112,10 +142,11 @@ router.get('/recipes/:id',async(req,res)=>{
                 id
             }
         })
-        return res.status(200).json(findbase)
+        return res.status(200).json(findbase[0])
        }
        else
      {
+        try{
         const recipe=await axios(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`) 
         const datos={
             id:recipe.data.id,
@@ -127,10 +158,13 @@ router.get('/recipes/:id',async(req,res)=>{
             diets:recipe.data.diets
         }
             return res.json(datos)
-
+    }
+    catch(error){
+        res.status(404).json({error:error.message})
+    }
     }    
     } catch (error) {
-        res.status(400).json({error:error.response})
+        res.status(400).json({error:error.message})
     }
 })
 

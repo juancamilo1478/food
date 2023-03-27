@@ -1,0 +1,238 @@
+
+.form_top_wallpeper{
+position: fixed;
+    background-image: url("../../images/f12.jpg");
+    background-size: 100% 100%;
+    height: 100%;
+    width: 100%;
+   
+
+}
+.form_father{
+    position: absolute;
+    width: 100%;
+    
+}
+
+
+
+
+
+
+.form_data{
+ 
+    position: relative;
+    z-index: 2;
+    width: 80%;
+    margin: auto;
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(238, 235, 240, 0.438);
+    h1{
+        font-family: 'Love Light', cursive;
+        font-size: 3vw;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+}
+
+.form_element{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    gap: 50px;
+    margin-bottom: 10px;
+    h3{
+        width: 20%;
+    }
+    input{
+        border: none;
+        outline: none;
+        width: 40%;
+        border-radius: 10px;
+        text-align: center;
+    }
+}
+.form_text_long{
+        width: 100%;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;
+        
+        margin-bottom: 10px;
+        justify-content: center;
+          
+        
+        
+            // align-items: center;
+        h3 {
+            margin-top: 50px;
+            width: 80%;
+            font-family: 'Love Light', cursive;
+            font-size: 3vw;
+            text-align: center;
+            
+        }
+    
+        input {
+            border: none;
+            outline: none;
+            width: 80%;
+            height: 100px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+}
+
+
+.form_add_recipe{
+  
+    width: 100%;
+    display: flex;
+    gap: 5%;
+    .form_2_element{
+        width: 45%;
+       
+            h5 {
+                    font-family: 'Love Light', cursive;
+                    font-size: 2vw;
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+    button{
+        border-radius: 50%;
+        padding: 10px;
+        background: rgb(17, 123, 131);
+        color: white;
+        margin-bottom: 20px;
+    }
+    }
+  
+}
+
+
+
+.form_look_recipe{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.look_all{
+    width: calc(50vw);
+    background: rgba(0, 0, 0, 0.37);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form_look_botton{
+    background: black; 
+    height: 20px; 
+    color: white; 
+    padding: 5px;
+    border-radius: 10px;
+    button{
+        margin-left: 20px;
+        color: red;
+        border-radius: 50%;
+        padding: 2px;
+       
+    }
+}
+.form_pasos{
+    width: 100%;
+    display: flex;
+    gap: 40px;
+}
+
+.form_pasos_look{
+    width: 100%;
+    background: red;
+}
+.form_textarea{
+    resize: none;
+    border-radius: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0.322);
+}
+
+
+.form_steps{
+    width: 100%;
+
+    h5{
+        font-family: 'Love Light', cursive;
+        font-size: 2vw;
+        text-align: center;
+            margin-bottom: 20px;
+    }
+    textarea{
+        resize: none;
+        width: 100%;
+    }
+}
+
+
+.look_step{
+    width: 100%;
+    
+    display: flex;
+    background: rgba(0, 0, 0, 0.534);
+    gap: 20px;
+    padding: 3px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    button{
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+   div{
+    color: white;
+        overflow: auto;
+        word-wrap: break-word;
+        width: calc(40vw);
+        height: 100%;
+        box-shadow: 5px 5px 5px black;
+        
+   }
+
+}
+
+
+.form_selector{
+    border-radius: 10px;
+    margin-right: 10px;
+    background: rgba(31, 31, 30, 0.568);
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.form_text_2{
+    background: rgba(0, 0, 0, 0.445);
+    border-radius: 10px;
+    color: white;
+}
+.finish_form{
+    border-radius: 10px;
+    padding: 10px;
+    background: red;
+    color: white;
+}
+.form_error{
+    margin: auto;
+    width: 80%;
+    background: rgba(255, 0, 0, 0.384);
+    border-radius: 10px;
+    h3{
+        margin-left: 10px;
+        margin-top: 10px;
+        
+    }
+}

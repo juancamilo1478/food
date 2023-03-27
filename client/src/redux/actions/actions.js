@@ -8,6 +8,7 @@ export const DIETS="DIETS";
 export const FILTERS="FILTERS";
 export const RESET="RESET";
 export const DETAIL_ID="DETAIL_ID";
+
 //// paginado
 const paginado=(data)=>{
   const tamaño = 9;
@@ -81,13 +82,22 @@ export const reset=()=>{
 }
 ///////////////////
 export const detaildata=(id)=>{
+    console.log(id.toString())
     return async(dispatch)=>{
-        const response=await axios(`http://localhost:3001/recipes/${id}`)
+        try{
+         const response=await axios(`http://localhost:3001/recipes/${id}`)
         console.log(response.data)
         return dispatch({
             type:DETAIL_ID,
             payload:response.data
         })
+        }catch(error){
+            return {
+            type:DETAIL_ID,
+            payload:{error:"no cargo"}
+        }
+        }
+      
     }
 }
 

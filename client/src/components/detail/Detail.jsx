@@ -2,16 +2,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { detaildata } from "../../redux/actions/actions";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
-
+import loading from "../../images/loading.gif";
 const Detail = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
   const detail = useSelector((state) => state.detail);
 
   useEffect(() => {
-    dispatch(detaildata(id));
-    console.log(detail.pasos);
-    console.log(detail.diets);
+    const real = id.toString();
+    console.log(real);
+    dispatch(detaildata(real));
   }, []);
 
   const estilos = {
@@ -25,10 +25,8 @@ const Detail = () => {
 
   return (
     <div className="detail_detail">
-      <div className="detail_fondo">
-        <div></div>
-      </div>
-      {detail.name ? (
+      <div className="detail_fondo"></div>
+      {detail.id && detail.id.toString() == id.toString() ? (
         <div className="detail_all">
           <h2>{detail.name}</h2>
           <div className="detail_2div">
@@ -60,13 +58,17 @@ const Detail = () => {
                 </div>
               );
             })}
-            <div className="detail_return">
-              <h4>Return</h4>
-            </div>
+            <Link to={"/home"} className="link">
+              <div className="detail_return">
+                <h4>Return</h4>
+              </div>
+            </Link>
           </div>
         </div>
       ) : (
-        <div>no cago que vamos hacer </div>
+        <div className="loading">
+          <img src={loading} alt="loading" />
+        </div>
       )}
     </div>
   );

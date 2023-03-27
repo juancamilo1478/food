@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchcards } from "../../redux/actions/actions";
-
+import { Link } from "react-router-dom";
 function Searchfood() {
   const [input, setInput] = useState({
     name: "",
@@ -21,10 +21,12 @@ function Searchfood() {
 
   return (
     <div className="search_all">
-      <div className="search_add">
-        <h1>Add recipe</h1>
-        <i class="fa-sharp fa-regular fa-pen-to-square"></i>
-      </div>
+      <Link to={"/form"} className="link">
+        <div className="search_add">
+          <h1>Add recipe</h1>
+          <i class="fa-sharp fa-regular fa-pen-to-square"></i>
+        </div>
+      </Link>
       <div className="search_search">
         <i class="fa-solid fa-magnifying-glass" />
         <input
